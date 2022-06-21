@@ -1,0 +1,47 @@
+{% extends 'main/base.html'%}
+
+{% block title %}FAQs{% endblock %}
+
+{% block body %}
+<div class="px-sm-5 pb-5">
+<div class="fs-4 mb-3 pt-3">FAQs</div>
+<div class="accordion mb-4" id="accordionExample">
+  {% for faq in faqs %}
+      <div class="accordion-item">
+        <h4 class="accordion-header" id="heading{{ faq.id }}">
+          <button class="accordion-button  {% if faq.id != faqs.0.id %} collapsed {% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ faq.id }}" aria-expanded="true" aria-controls="collapse{{ faq.id }}">
+            {{ faq.question }}
+          </button>
+        </h4>
+        <div id="collapse{{ faq.id }}" class="accordion-collapse collapse {% if faq.id == faqs.0.id %} show {% endif %}" aria-labelledby="heading{{ faq.id }}" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            {{ faq.answer }}
+          </div>
+        </div>
+      </div>
+
+    {% endfor %}
+         
+  </div>
+
+  <div class="text-end">
+<div class="btn-group">
+  {% if pages > 1 %}
+      <a href="/faqs/?page={{ dct.begin }}" class="{% if dct.begin == active_page %} prevent-default {% endif %}btn btn-sm btn-dark border-secondary {% if i == active_page %}active{% endif %}" type="button" style="box-shadow: none;">
+        <i class="bi bi-chevron-left"></i></a>
+
+   {% for i in rang %}
+      <a href="/faqs/?page={{i}}" class="btn btn-sm btn-dark border-secondary {% if i == active_page %}active{% endif %}" type="button" style="box-shadow: none;">{{ i }}</a>
+    {% endfor %}
+
+      <a href="/faqs/?page={{ dct.end }}" class="{% if dct.end == active_page %} prevent-default {% endif %}btn btn-sm btn-dark border-secondary {% if i == active_page %}active{% endif %}" type="button" style="box-shadow: none;">
+      <i class="bi bi-chevron-right"></i></a>        
+
+  {% endif %}
+</div>
+</div>
+
+</div>
+
+
+{% endblock %}

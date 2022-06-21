@@ -1,0 +1,48 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="hhhhh">
+    <meta name="keywords" content="hhh">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>{% block title %}{% endblock %}</title>
+
+  <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+   <link rel="stylesheet" type="text/css" href="{% static 'icons-1.5.0/font/bootstrap-icons.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'bootstrap-5.1.1/dist/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'bootstrap-4.0.0/dist/css/bootstrap.min.css' %}">
+
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+
+  {% block style %} {% endblock %}
+</head>
+<body>
+
+
+<div class="container-fluid" style="background-color: rgba(0,0,0,0.02); min-height: 100vh" onclick="emmaNavclose()">
+    {% block body %} {% endblock %}
+</div>
+
+
+<script type="text/javascript">
+
+</script>
+
+<script src="{% static 'bootstrap-5.1.1/dist/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'bootstrap-4.0.0/dist/js/bootstrap.min.js' %}"></script>
+
+<script src="{% static 'js/main.js' %}"></script>
+
+{% block script %} 
+
+{% endblock %}
+
+
+</body>
+</html>

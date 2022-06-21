@@ -1,0 +1,65 @@
+{% extends 'registration/base.html'%}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+
+{% block title %}Signin{% endblock %}
+
+
+{% block body %} 
+
+<div class="">
+<div class="row pt-3">
+  <div class="col-md-10 col-lg-6 mx-auto">
+
+    <div class="py-3 mb-3"><a href="/"><img class="mx-auto d-block" src="{% static 'img/phoniebg-dark.png' %}" style="max-height: 1.5rem"></a></div>
+
+
+    <div class="container-fluid rounded shadow-sm bg-white py-3" style="max-width: 425px">
+
+      <div class="text-center pb-4 pt-2 fs-5">Please Sign In</div>
+
+      <form action="." method="post">
+
+        {% csrf_token %}
+        {{ form|crispy }}
+
+        <div class="mb-3">
+            <a class="text-muted" href="/forgot-password"><small>Forgotten password</small></a>
+            <!-- <a class="text-muted float-end" href="/signup"><small>Sign up</small></a> -->
+        </div>
+              
+        <div class="pb-3s">
+          <button class="btn btn-success btn-sm w-100" id="subBtn" type="submit">Sign in</button>
+        </div>
+    </form>
+
+    <div class="text-center pt-2 pb-2"><small>Don't have an account? <a class="text-muted" href="/signup">Sign up</a></small></div>
+        
+    </div>
+  </div>
+</div>
+</div>
+
+
+{% endblock %}
+
+
+{% block script %}
+
+<script>
+  q = document.querySelectorAll('.form-group')
+  q[1].style.marginBottom = '0.5rem'
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+

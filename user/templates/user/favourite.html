@@ -1,0 +1,282 @@
+{% extends 'user/base.html'%}
+
+{% block title %} {% if l > 1 %} Favourites {% else %} Favourite {% endif %}{% endblock %}
+
+{% block body %}
+ <div class="pt-3 mb-4">
+      <div class="fs-2"> {% if l > 1 %} Favourites {% else %} Favourite {% endif %}</div>
+  </div>
+
+ <div class="row pb-3">
+  
+   <div class="col-lg-4 mb-3 d-lg-none">
+        <div class="bg-white rounded shadow-sm px-3 py-3">
+          <div class="fs-3 border-bottom text-center">Favourite {% if l > 1 %} items {% else %} item {% endif %}</div>
+          <div class="py-3 text-center">
+             You have <span class="favourite-len">{{ l }}</span> favourite {% if l > 1 %} items {% else %} item {% endif %}
+          </div>
+      </div>
+    </div>
+
+     
+      <div class="col-lg-8">
+
+        <!-- <div class="fs-2 pb-3 d-none d-md-block">Favourite List</div> -->
+
+        <div class="row">
+
+          <div class="col-lg-12 fs-6 text-center" id="favouriteIsEmpty" style="{% if l >= 1 %}display: none;{% endif %}"> 
+          <div class="border mb-3 rounded shadow-sm text-dark bg-white py-3 d-sm-block d-none">You have no favourites
+          </div>
+          </div>
+          {% for phone in phones %}
+          <div class="col-xl-12">
+          <div class="borders mb-3 rounded shadow-sm text-dark bg-white">
+            <div class="row">
+              <div class="col-sm-6">
+              <div class="d-none d-sm-block border-ends h-100" style="background-color: #f8f8f8">
+                <img class="img-fluid mx-auto d-block" style="max-height: 200px;max-width: 200px" src="/static/{{ phone.phone_image_front }}">
+              </div>
+
+              <div class="d-sm-none  border-bottoms shadow-sm h-100" style="background-color: #f8f8f8">
+                <img class="img-fluid mx-auto d-block" style="max-height: 200px;max-width: 200px"  src="/static/{{ phone.phone_image_front }}">
+              </div>
+              </div>
+              <div class="col-sm-6">
+              <div class="pe-3 ps-sm-0 ps-3 py-3">
+                <div class="row">
+                <div class="fw-normal col-5">$<span style="font-size: 1.2rem;">{{ phone.price|floatformat }}</span></div>
+
+                <div class="text-end col-7">
+                  <!-- <button class="dis-figured-btn bg-success text-light rounded px-2" style="font-size: 1.2em;">Buy now</button> -->
+                  <button class="bi {% if phone.id in lst_favourite %} bi-bookmark-heart-fill {% else %} bi-bookmark-heart {% endif %} dis-figured-btn send-favourite" value="{{ phone.id }}" id="{{ phone.id }}" style="font-size: 1.9em;cursor: pointer;vertical-align: middle;"></button>
+                  
+                </div>
+                </div>
+                <div class="description mt-3 mb-2" style="cursor: pointer;">
+                  {#<span class="fw-normal" style="font-size: 1.15rem;">{{ phone.description }}</span>#}
+                  <!-- should be display none on more click--> 
+                  <span class="fw-normal" style="font-size: 1.15rem;">{{ phone.name | title }} - {{ phone.storage | title }} storage | {{ phone.ram | title }} ram | {{ phone.display_resolution | title }} display | {{ phone.os | title }} os | {{ phone.body_color | title }} color ...</span>
+                  
+                </div>
+                <!-- <div class="text-center"><span class="emma-a more-icon">more <i class="bi bi-chevron-down"></i></span></div> -->
+
+
+            <div style="display: none;font-size: 1.15rem;cursor: pointer;" class="more-detail emma-text fw-normal mt-3">
+                  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                    <span>Name</span> <span>{{ phone.name | title }}</span>
+                  </div>
+
+                  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                    <span>Brand</span> <span>{{ phone.brand | title }}</span>
+                  </div>
+
+                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                    <span>Year</span> <span>{{ phone.year | title }}</span>
+                  </div>
+
+                  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                    <span>Network</span> <span>{{ phone.network | title }}</span>
+                  </div>
+
+                  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                    <span>Body form</span> <span>{{ phone.body_form_factor | title }}</span>
+                  </div>
+
+                  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                    <span>Body color</span> <span>{{ phone.body_color | title }}</span>
+                  </div>
+
+                  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                    <span>Operating System</span> <span>{{ phone.os | title }}</span>
+                  </div>
+
+                  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                    <span>Memory</span> <span>{{ phone.ram | title }}</span>
+                  </div>
+
+                  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                    <span>Storage</span> <span>{{ phone.storage | title }}</span>
+                  </div>
+
+                  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                    <span>Display Resolution</span> <span>{{ phone.display_resolution | title }}</span>
+                  </div>
+
+                  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                    <span>Main Camera Resolution</span> <span>{{ phone.main_camera_resolution | title }}</span>
+                  </div>
+
+                  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                    <span>Selfie Camera Resolution</span> <span>{{ phone.selfie_camera_resolution | title }}</span>
+                  </div>
+
+                  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                    <span>Wlan</span> <span>{{ phone.wlan | title }}</span>
+                  </div>
+
+                  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                    <span>Bluetooth</span> <span>{{ phone.bluetooth | title }}</span>
+                  </div>
+
+                  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                    <span>GPS</span> <span>{{ phone.gps | title }}</span>
+                  </div>
+
+                  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                    <span>Fm Radio</span> <span>{{ phone.fm_radio | title }}</span>
+                  </div>
+
+                  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                    <span>Battery Capacity</span> <span>{{ phone.battery_capacity | title }}</span>
+                  </div>
+
+                  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                    <span>Battery Duration</span> <span>{{ phone.battery_duration | title }}</span>
+                  </div>
+
+                  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                    <span>Battery Removable</span> <span>{{ phone.battery_removable | title }}</span>
+                  </div>
+
+                  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                    <span>Fingerprint Sensor</span> <span>{{ phone.fingerprint_sensor | title }}</span>
+                  </div>
+
+                  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                    <span>Water Resistant</span> <span>{{ phone.water_resistant | title }}</span>
+                  </div>
+                </div>
+                <div class="text-center"><span style="cursor: pointer;" class="emma-a more-icon">more <i class="bi bi-chevron-down"></i></span></div>
+
+              </div>
+              </div>
+              </div>
+
+
+
+          </div>
+          </div>
+          {% endfor %}
+
+
+          </div>
+</div>
+
+ <div class="col-lg-4 d-none d-lg-block">
+        <div class="bg-white rounded shadow-sm px-3 py-3">
+          <div class="fs-3 border-bottom text-center">Favourite {% if l > 1 %} items {% else %} item {% endif %}</div>
+          <div class="py-3 text-center">
+             You have <span class="favourite-len">{{ l }}</span> favourite {% if l > 1 %} items {% else %} item {% endif %}
+          </div>
+        </div>
+      </div>
+
+</div>
+
+{% endblock %}
+
+
+
+{% block script %} 
+
+
+
+<script>
+ 
+function moreOrLess(){
+    displayText = this.className;
+
+    if (displayText.search('description') >= 0){
+        let display = this.parentElement.children[this.parentElement.children.length -2].style.display;
+      if (display == 'block'){
+        this.parentElement.children[this.parentElement.children.length -2].style.display = 'none';
+        this.parentElement.children[this.parentElement.children.length -3].style.display = 'block';
+        this.parentElement.children[this.parentElement.children.length -1].children[0].innerHTML = 'more<i class="bi bi-chevron-down"></i>';
+        footerShortLocation(0) 
+
+      }else{
+        this.parentElement.children[this.parentElement.children.length -2].style.display = 'block'
+        this.parentElement.children[this.parentElement.children.length -3].style.display = 'none'
+        this.parentElement.children[this.parentElement.children.length -1].children[0].innerHTML = 'less<i class="bi bi-chevron-up"></i>';
+        footerShortLocation(0) 
+
+      }
+    }
+    if (displayText.search('more-detail') >= 0){
+      let display = this.parentElement.children[this.parentElement.children.length -2].style.display;
+      if (display == 'block'){
+        this.parentElement.children[this.parentElement.children.length -2].style.display = 'none';
+        this.parentElement.children[this.parentElement.children.length -3].style.display = 'block';
+        this.parentElement.children[this.parentElement.children.length -1].children[0].innerHTML = 'more<i class="bi bi-chevron-down"></i>';
+        footerShortLocation(0) 
+
+      }else{
+        this.parentElement.children[this.parentElement.children.length -2].style.display = 'block'
+        this.parentElement.children[this.parentElement.children.length -3].style.display = 'none'
+        this.parentElement.children[this.parentElement.children.length -1].children[0].innerHTML = 'less<i class="bi bi-chevron-up"></i>';
+        footerShortLocation(0) 
+
+      }     
+    }
+
+    if (displayText.search('description') < 0 && displayText.search('more-detail') < 0){
+      let display = this.parentElement.parentElement.children[this.parentElement.parentElement.children.length -2].style.display;
+      if (display == 'block'){
+        this.parentElement.parentElement.children[this.parentElement.parentElement.children.length -2].style.display = 'none';
+        this.parentElement.parentElement.children[this.parentElement.parentElement.children.length -3].style.display = 'block';
+        this.innerHTML = 'more<i class="bi bi-chevron-down"></i>';
+        footerShortLocation(0) 
+
+      }else{
+        this.parentElement.parentElement.children[this.parentElement.parentElement.children.length -2].style.display = 'block'
+        this.parentElement.parentElement.children[this.parentElement.parentElement.children.length -3].style.display = 'none'
+        this.innerHTML = 'less<i class="bi bi-chevron-up"></i>';
+        footerShortLocation(0) 
+
+      }
+    }
+  }
+
+
+document.querySelectorAll('.more-icon').forEach( function(e){
+  e.addEventListener('click', moreOrLess)
+})
+
+document.querySelectorAll('.more-detail').forEach( function(e){
+  e.addEventListener('click', moreOrLess)
+})
+
+document.querySelectorAll('.description').forEach( function(e){
+  e.addEventListener('click', moreOrLess)
+})
+
+ 
+
+
+ document.querySelectorAll('.send-favourite').forEach( function(e){
+  e.addEventListener('click', function(){
+    this.value = Number(this.value)
+    let favourite = getCookie('favourite');
+      this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.style.display = 'none'
+      this.setAttribute('class', 'bi bi-bookmark-heart dis-figured-btn send-favourite')
+        footerShortLocation(0) 
+      deleteCookie('favourite', this.value);
+      document.querySelector('.favourite-badge').value = document.querySelector('.favourite-badge').value - 1
+      document.querySelectorAll('.favourite-len').forEach( function(len){
+        len.innerText = Number(len.innerText) - 1
+      })
+      if (Number(document.querySelector('.favourite-len').innerText) < 1){
+        document.querySelector('#favouriteIsEmpty').style.display = 'block'
+      }
+
+
+
+  })
+})
+
+
+</script>
+
+
+{% endblock %}

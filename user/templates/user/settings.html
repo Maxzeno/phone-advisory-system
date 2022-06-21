@@ -1,0 +1,50 @@
+{% extends 'user/base.html'%}
+
+{% block title %}Settings{% endblock %}
+
+{% block body %}
+ 
+ <div class="row mb-3">
+  
+   <div class="col-lg-8 col-md-10 mx-auto">
+      <div class="fs-2 mb-3 mt-2">Settings</div>
+      {% if messages %}
+        {% for message in messages %}
+          <div class="{% if message.tags %} {{ message.tags }} {% endif %} alert alert-warning mt-4 text-center" role="alert">
+          {{ message }}
+          </div><br>
+        {% endfor %}
+      {% endif %}
+
+
+
+      <div class="py-2">
+        
+        <div class="my-2 py-2 px-3 mb-3 shadow-sm bg-white rounded">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
+            <div class="fs-4">Security</div>
+            <a href="/security" class="fs-5 emma-a">Edit</a>
+        </div>
+            <div class="fs-6">Change Password</div>
+      </div>
+
+      <div class="my-2 py-2 px-3 shadow-sm bg-white rounded">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
+            <div class="fs-4">Full Name</div>
+            <a href="/settings/fullname/" class="fs-5 emma-a">Edit</a>
+        </div>
+            <div class="fs-6">First name, Last name</div>
+      </div>
+      </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+
+
+{% block script %} 
+
+
+{% endblock %}

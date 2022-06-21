@@ -1,0 +1,382 @@
+{% extends 'user/base.html'%}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}Discover{% endblock %}
+
+{% block icon %}
+ <a href="#" class="emma-a-light me-2"><i class="bi bi-filter-circle me-2 d-lg-none" id="filterIcon" style="font-size: 1.3em; line-height: 0; cursor: pointer;"></i></a>{% endblock %}
+{% block container_fluid %}none{% endblock %}
+
+
+{% block  SearchForm %}
+  <form action="." autocomplete="none" method="get" style="align-items: center;" class="d-flex mx-3 form-inline navbar-search py-0 my-0" id="subscribeForm">
+    <div class="input-group w-100 py-0 my-0">
+      {{ searchform.name }}
+      {% csrf_token %}
+      <!-- <input type="text" class="py-0 my-0 form-control bg-light border-0 small" name="email" id="email" placeholder="Phone name" aria-label="Search" aria-describedby="basic-addon2"> -->
+      <div class="input-group-append py-0 my-0 ">
+      <button class=" py-0 my-0 btn btn-success text-d shadow-none" type="submit" id="subscribe">
+      <i class="bi bi-search"></i>
+      </button>
+      </div>
+    </div>
+  </form>
+{% endblock %}
+
+
+{% block body %}
+<!-- <div class="d-none px-3 mb-2" id="filters" style="background-color: rgb(26, 29, 32, 0.2)">
+  <div class="text-end"><a class="emma-a" href="#">Filters</a></div>
+</div> -->
+<div class="container-fluid">
+ <div class="row pt-md-4">
+
+        <div class="col-lg-4 d-none d-lg-block">
+          <div  id="searchIcon" class="fs-4 mb-2" style="color: rgba(0, 0, 0, 0.8) !important";>Filters
+          <i class="bi bi-filter-circle me-2 d-lg-none" id="filterIcon" style="font-size: 1.3em; line-height: 0; cursor: pointer;"></i>
+        </div>
+
+        <div class="bg-white rounded shadow-sm px-3 py-3 borders">
+          <form action="." method="get">
+ 
+            {{ form|crispy }}
+
+            {% csrf_token %}
+
+
+          {# BLOCK 1 #}
+
+        <div class="bg-white border-top d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center px-2 py-2">
+          <button formaction="/resetter{{request.path}}" type="submit" class="btn btn-warning btn-sm">Reset</button>
+          <button class="btn btn-success btn-sm" type="submit">Filter</button>
+        </div>  
+          </form>
+
+      </div>
+      </div>
+
+      <div class="col-lg-8">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
+          {% if filter %}
+          <div class="fs-2 pt-3 pt-sm-0 pb-3">{{ in_process }}</div>
+            <div class="fs-6 pt-3 pt-sm-0 pb-3"><a href="/resetter{{request.path}}" class="emma-a">{{ reset_msg }}</a></div>
+          {% else %}
+          <div class="fs-2 pt-3 pt-sm-0 pb-3">Discover</div>
+          {% endif %}
+        </div>
+
+
+        <div class="row">
+          {% if phones %}
+            {% for phone in phones %}
+             <div class="col-xl-12">
+            <div class="borders mb-3 rounded shadow-sm text-dark bg-white">
+              <div class="row">
+                <div class="col-sm-6">
+                <div class="d-none d-sm-block border-ends h-100" style="background-color: #f8f8f8">
+                  <img class="img-fluid mx-auto d-block" style="max-height: 200px;max-width: 200px" src="/static/{{ phone.phone_image_front }}">
+                </div>
+
+                <div class="d-sm-none shadow-sm h-100" style="background-color: #f8f8f8">
+                  <img class="img-fluid mx-auto d-block" style="max-height: 200px;max-width: 200px" src="/static/{{ phone.phone_image_front }}">
+                </div>
+                </div>
+                <div class="col-sm-6">
+                <div class="pe-3 ps-sm-0 ps-3 py-3">
+                  <div class="row">
+                  <div class="fw-normal col-5">$<span style="font-size: 1.2rem;">{{ phone.price|floatformat }}</span><span style="vertical-align: top"> <!-- - </span>$<span style="font-size: 1.2rem;">9999</span> --></div>
+
+                  <div class="text-end col-7">
+                    <!-- <button class="dis-figured-btn bg-success text-light rounded px-2" style="font-size: 1.2em;">Buy now</button> -->
+                    <button class="bi {% if phone.id in lst_favourite %} bi-bookmark-heart-fill {% else %} bi-bookmark-heart {% endif %} dis-figured-btn send-favourite" value="{{ phone.id }}" id="{{ phone.id }}" style="font-size: 1.9em;cursor: pointer;vertical-align: middle;"></button>
+                    
+                  </div>
+                  </div>
+                  <div class="description mt-3 mb-2" style="cursor: pointer;">
+                    <!-- should be display none on more click--> 
+                    <span class="fw-normal" style="font-size: 1.15rem;">{{ phone.name | title }} - {{ phone.storage | title }} storage | {{ phone.ram | title }} ram | {{ phone.display_resolution | title }} display | {{ phone.os | title }} os | {{ phone.body_color | title }} color ...</span>
+                    
+                  </div>
+                  <!-- <div class="text-center"><span class="emma-a more-icon">more <i class="bi bi-chevron-down"></i></span></div> -->
+
+
+              <div style="display: none;font-size: 1.15rem;cursor: pointer;" class="more-detail emma-text fw-normal mt-3">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                      <span>Name</span> <span>{{ phone.name | title }}</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                      <span>Brand</span> <span>{{ phone.brand | title }}</span>
+                    </div>
+
+                   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                      <span>Year</span> <span>{{ phone.year | title }}</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                      <span>Network</span> <span>{{ phone.network | title }}</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                      <span>Body form</span> <span>{{ phone.body_form_factor | title }}</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                      <span>Body color</span> <span>{{ phone.body_color | title }}</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                      <span>Operating System</span> <span>{{ phone.os | title }}</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                      <span>Memory</span> <span>{{ phone.ram | title }}</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                      <span>Storage</span> <span>{{ phone.storage | title }}</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                      <span>Display Resolution</span> <span>{{ phone.display_resolution | title }}</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                      <span>Main Camera Resolution</span> <span>{{ phone.main_camera_resolution | title }}</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                      <span>Selfie Camera Resolution</span> <span>{{ phone.selfie_camera_resolution | title }}</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                      <span>Wlan</span> <span>{{ phone.wlan | title }}</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                      <span>Bluetooth</span> <span>{{ phone.bluetooth | title }}</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                      <span>GPS</span> <span>{{ phone.gps | title }}</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                      <span>Fm Radio</span> <span>{{ phone.fm_radio | title }}</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                      <span>Battery Capacity</span> <span>{{ phone.battery_capacity | title }}</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                      <span>Battery Duration</span> <span>{{ phone.battery_duration | title }}</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                      <span>Battery Removable</span> <span>{{ phone.battery_removable | title }}</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                      <span>Fingerprint Sensor</span> <span>{{ phone.fingerprint_sensor | title }}</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+                      <span>Water Resistant</span> <span>{{ phone.water_resistant | title }}</span>
+                    </div>
+                  </div>
+                  <div class="text-center"><span style="cursor: pointer;" class="emma-a more-icon">more <i class="bi bi-chevron-down"></i></span></div>
+
+                </div>
+                </div>
+                </div>
+
+
+
+            </div>
+            </div>
+
+
+            {% endfor %}
+          {% else %}
+            <div class="col-xl-12 fs-6 text-center">
+              <div class="border mb-3 rounded shadow-sm text-dark bg-white py-3">No phone found</div>
+          </div>
+          {% endif %}
+
+          </div>
+</div>
+</div>
+
+
+
+<div class="text-end pb-5">
+<div class="btn-group">
+  {% if pages > 1 %}
+      <a href="/discover?page={{ dct.begin }}{{ params }}" class="{% if dct.begin == active_page %} prevent-default {% endif %}btn btn-sm btn-dark border-secondary {% if i == active_page %}active{% endif %}" type="button" style="box-shadow: none;">
+        <i class="bi bi-chevron-left"></i></a>
+
+   {% for i in rang %}
+      <a href="/discover?page={{i}}{{ params }}" class="btn btn-sm btn-dark border-secondary {% if i == active_page %}active{% endif %}" type="button" style="box-shadow: none;">{{ i }}</a>
+    {% endfor %}
+
+      <a href="/discover?page={{ dct.end }}{{ params }}" class="{% if dct.end == active_page %} prevent-default {% endif %}btn btn-sm btn-dark border-secondary {% if i == active_page %}active{% endif %}" type="button" style="box-shadow: none;">
+      <i class="bi bi-chevron-right"></i></a>        
+
+  {% endif %}
+</div>
+</div>
+</div>
+
+
+
+  <div id="filters" class="d-none">
+  <form action="." method="get">
+
+  <div class="bg-white rounded-top shadow-sm px-3 pt-3 pb-5" style="z-index: 5; position: fixed; left: 0;right: 0; bottom: 0;height: 60%; overflow-x: hidden; overflow-y: auto;">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2">
+          <div  id="searchIcon" class="fs-3">Filters</div>
+          <div><i id="cancelFilterIcon" class="bi bi-x" style="font-size: 1.37rem;line-height: 0;cursor: pointer;"></i></div>
+    </div>
+            {{ form|crispy }}
+
+            {% csrf_token %}
+
+        </div>
+        <div style="position: fixed; z-index: 3050; bottom: 0;right: 0;left: 0;">
+        <div class="bg-white border-top d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center px-2 py-2">
+          <button formaction="/resetter{{request.path}}" type="submit" class="btn btn-warning btn-sm">Reset</button>
+          <button class="btn btn-success btn-sm" type="submit">Filter</button>
+        </div>
+        </div>
+          </form>
+        </div>
+        </div>
+
+{% endblock %}
+
+
+
+
+
+
+
+{% block script %} 
+
+
+
+
+<script>
+
+
+function moreOrLess(){
+    displayText = this.className;
+
+    if (displayText.search('description') >= 0){
+        let display = this.parentElement.children[this.parentElement.children.length -2].style.display;
+      if (display == 'block'){
+        this.parentElement.children[this.parentElement.children.length -2].style.display = 'none';
+        this.parentElement.children[this.parentElement.children.length -3].style.display = 'block';
+        this.parentElement.children[this.parentElement.children.length -1].children[0].innerHTML = 'more<i class="bi bi-chevron-down"></i>';
+        footerShortLocation(0) 
+
+      }else{
+        this.parentElement.children[this.parentElement.children.length -2].style.display = 'block'
+        this.parentElement.children[this.parentElement.children.length -3].style.display = 'none'
+        this.parentElement.children[this.parentElement.children.length -1].children[0].innerHTML = 'less<i class="bi bi-chevron-up"></i>';
+        footerShortLocation(0) 
+
+      }
+    }
+    if (displayText.search('more-detail') >= 0){
+      let display = this.parentElement.children[this.parentElement.children.length -2].style.display;
+      if (display == 'block'){
+        this.parentElement.children[this.parentElement.children.length -2].style.display = 'none';
+        this.parentElement.children[this.parentElement.children.length -3].style.display = 'block';
+        this.parentElement.children[this.parentElement.children.length -1].children[0].innerHTML = 'more<i class="bi bi-chevron-down"></i>';
+        footerShortLocation(0) 
+
+      }else{
+        this.parentElement.children[this.parentElement.children.length -2].style.display = 'block'
+        this.parentElement.children[this.parentElement.children.length -3].style.display = 'none'
+        this.parentElement.children[this.parentElement.children.length -1].children[0].innerHTML = 'less<i class="bi bi-chevron-up"></i>';
+        footerShortLocation(0) 
+
+      }     
+    }
+
+    if (displayText.search('description') < 0 && displayText.search('more-detail') < 0){
+      let display = this.parentElement.parentElement.children[this.parentElement.parentElement.children.length -2].style.display;
+      if (display == 'block'){
+        this.parentElement.parentElement.children[this.parentElement.parentElement.children.length -2].style.display = 'none';
+        this.parentElement.parentElement.children[this.parentElement.parentElement.children.length -3].style.display = 'block';
+        this.innerHTML = 'more<i class="bi bi-chevron-down"></i>';
+        footerShortLocation(0) 
+
+      }else{
+        this.parentElement.parentElement.children[this.parentElement.parentElement.children.length -2].style.display = 'block'
+        this.parentElement.parentElement.children[this.parentElement.parentElement.children.length -3].style.display = 'none'
+        this.innerHTML = 'less<i class="bi bi-chevron-up"></i>';
+        footerShortLocation(0) 
+
+      }
+    }
+  }
+
+
+document.querySelectorAll('.more-icon').forEach( function(e){
+  e.addEventListener('click', moreOrLess)
+})
+
+document.querySelectorAll('.more-detail').forEach( function(e){
+  e.addEventListener('click', moreOrLess)
+})
+
+document.querySelectorAll('.description').forEach( function(e){
+  e.addEventListener('click', moreOrLess)
+})
+
+   
+
+// document.querySelectorAll('.more-detail').forEach( function(e){
+//   e.addEventListener('click', moreOrLess)
+// })
+
+
+ document.querySelectorAll('.send-favourite').forEach( function(e){
+  e.addEventListener('click', function(){
+    this.value = Number(this.value)
+    let favourite = getCookie('favourite');
+    if (favourite.length > 0 && favourite.includes(this.value) == false){
+      this.setAttribute('class', 'bi bi-bookmark-heart-fill dis-figured-btn send-favourite')
+      setCookie('favourite', this.value);
+      document.querySelector('.favourite-badge').value = document.querySelector('.favourite-badge').value + 1                
+
+
+    }else if (favourite.length > 0 && favourite.includes(this.value) == true){
+      this.setAttribute('class', 'bi bi-bookmark-heart dis-figured-btn send-favourite')
+      deleteCookie('favourite', this.value);
+      document.querySelector('.favourite-badge').value = document.querySelector('.favourite-badge').value - 1
+
+    }else{
+      this.setAttribute('class', 'bi bi-bookmark-heart-fill dis-figured-btn send-favourite')
+      setCookie('favourite', this.value)
+      document.querySelector('.favourite-badge').value = document.querySelector('.favourite-badge').value + 1
+
+    }
+  })
+})
+   
+
+
+
+document.querySelector('#filterIcon').addEventListener('click', filtersAprear);
+document.querySelector('#cancelFilterIcon').addEventListener('click', filtersAprear);
+
+
+</script>
+
+{% endblock %}

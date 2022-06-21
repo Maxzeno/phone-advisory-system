@@ -1,0 +1,631 @@
+int factorial(int n);
+
+int main(){
+    int number;
+    cout << "Enter number ";
+    cin >> number;
+    int facto = factorial(number);
+    cout << "Factorial of " << number << " = " << facto << endl;
+    return 0;
+}
+
+int factorial(int n){
+    if (n > 1){
+        return n * factorial(n-1);
+    }else if(n < -1){
+        return n * factorial(n+1) * 1;
+    }else{
+    return 1;
+    }
+}
+
+
+
+
+int main(){
+
+    string myName = "Nwaegunwa Emmanuel Chidera";
+    string registrationNumber = "2020030192563";
+    string dateOfBirth = "15-04-2001";
+
+    cout << "My name is " << myName << endl;
+    cout << "My registration number is " << registrationNumber << endl;
+    cout << "My date of birth " << dateOfBirth << endl;
+
+    return 0;
+}
+
+
+
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+
+
+
+
+
+
+
+
+string sayHello(string name="emma"){
+    string greeting =  "Hello " + name;
+    return greeting;
+}
+
+
+class Animal {
+    private:
+        string name;
+        double height;
+        double weight;
+        static int numOfAnimals;
+
+    public:
+        string GetName(){return name;}
+        void SetName(string name){this->name = name;}
+
+        double GetHeight(){return height;}
+        void SetHeight(double height){this->height = height;}
+
+        double GetWeight(){return weight;}
+        void SetWeight(double weight){this->weight = weight;}
+
+        SetAll(string, double, double);
+        Animal(string, double, double);
+        Animal();
+        /*
+        //////// DECONSTRUCTOR /////////
+        ~Animal();
+        */
+        static int GetNumOfAnimals(){return numOfAnimals;}
+        void ToString();
+};
+
+int Animal::numOfAnimals = 0;
+
+Animal::SetAll(string name, double height, double weight){
+    this->name = name;
+    this->weight = weight;
+    this->height = height;
+    Animal::numOfAnimals++;
+}
+
+Animal::Animal(string name, double height, double weight){
+    this->name = name;
+    this->weight = weight;
+    this->height = height;
+    Animal::numOfAnimals++;
+}
+
+Animal::Animal(){
+    this->name = "";
+    this->weight = 0;
+    this->height = 0;
+    Animal::numOfAnimals++;
+}
+
+/*
+//////// DECONSTRUCTOR /////////
+Animal::~Animal(){
+    cout << "Animal " << this->name << " destroyed\n";
+}
+*/
+void Animal::ToString(){
+    cout
+     << this->name
+     << " is "
+     << this->height
+     << " cms tall and "
+     << this->weight
+     << " kgs in weight"
+     << endl;
+}
+
+
+class Dog: public Animal{
+private:
+    string sound = "Woof";
+public:
+    void MakeSound(){
+        cout
+        << "The dog "
+        << this->GetName()
+        << " says "
+        << this->sound
+        << endl;
+    }
+    Dog(string, double, double, string);
+    Dog(): Animal(){};
+    void ToString();
+};
+
+Dog::Dog(string name, double height, double weight, string sound):
+    Animal(name, height, weight){
+        this->sound = sound;
+    }
+
+void Dog::ToString(){
+    cout
+     << this->GetName()
+     << " is "
+     << this->GetHeight()
+     << " cms tall and "
+     << this->GetWeight()
+     << " kgs in weight and says "
+     << this->sound
+     << endl;
+}
+
+/////////////////////////// METHODS ARE OUT SIDE CLASS //////////////////////////
+
+class Mult{
+    protected:
+        int num;
+        int with;
+
+    public:
+        Mult(int, int);
+
+        int mul();
+};
+
+Mult::Mult(int num=1, int with=1){
+    this->num = num;
+    this->with = with;
+}
+
+int Mult::mul(){
+    int res = this->num * this->with;
+    return res;
+}
+
+
+///////////////////////// METHODS ARE IN CLASS //////////////////////////
+
+class Powers: public Mult{
+    private:
+        int nums;
+        int by;
+
+    public:
+        Powers(int nums=1, int by=1, int num=1, int with=1): Mult(num, with){
+            this->nums = nums;
+            this->by = by;
+            // Mult::with = 2;
+        }
+
+        int pow(){
+            int res = 1;
+            int i = 1;
+            while (i <= this->by){
+                res = res * this->nums;
+                i++;
+            }
+            return res;
+        }
+
+        int muly(){
+            return Mult::mul();
+        }
+
+        string sweetMaths(string name="No Name"){
+            return name + " Maths is sweet";
+        }
+};
+
+
+int main()
+{
+    //////// C LANGUAGE /////////
+    char aaa[] = "nwaegunwa";
+    char bbb[] = "Emmanuel";
+    //char ccc[] = aaa + bbb;
+    //cout << ccc << endl;
+    //cout << aaa << endl;
+    //printf("hello world\n");
+    //printf("%s\n", aaa);
+
+    //////////// C++ ///////////
+
+    // Powers ti;
+     Powers ti(5, 4, 2, 5);
+     //cout << ti.pow() <<endl;
+
+     //cout << ti.muly() <<endl;
+     //cout << ti.mul() <<endl;
+     //cout << ti.sweetMaths("Emma C ") <<endl;
+
+
+     //////////////////////////
+     // Mult mu
+     Mult mu(4, 1);
+     // cout << mu.mul()<< endl;
+
+     ///////////////////////
+
+ 	// int aa[3][2] = {
+ 		// {1,2},
+ 		// {3},
+ 		// {5,6}
+ 		// };
+    // cout << aa[2][-4] << endl;
+ 	// string bb[10] = {"1","2","3"}; // makes chance for 10
+ 	// cout << bb[5] << endl;
+ 	// char cc[3] = {'1','2','3'}; // can only have 3
+ 	// cc[2] = 'g';
+
+    // cout << cc[2] << endl;
+
+/*
+    Animal fred;
+    fred.ToString();
+    fred.SetHeight(33);
+    fred.SetWeight(10);
+    fred.SetName("Fred");
+    fred.ToString();
+
+    Animal tom("Tom", 36, 15);
+    tom.ToString();
+
+    cout << Animal::GetNumOfAnimals() << endl;
+
+
+    cout
+    << "\n"
+    << endl;
+
+    Dog spot("Spot", 38, 16, "Woooof");
+    spot.ToString();
+
+    cout
+    << "Number of animals "
+    << Animal::GetNumOfAnimals()
+    << endl;
+*/
+
+
+
+
+//////////////////////////
+/*
+
+    auto myAha = "Emmanuel";
+    myAha = "the use of \"auto\" to declare veriable is great";
+    cout << myAha << endl;
+
+    const auto pi = 3.142857;
+
+    cout << pi << endl;
+    auto sh = sayHello("emma chi");
+    cout << sh << endl;
+
+////////////////////////
+
+    int counts = 15;
+    int l = 0;
+    do
+    {
+        cout << "hello emmanuel" << endl;
+        l += 1;
+    } while (l < counts);
+
+    while(l < counts){
+        if (l < 5){
+            cout << "less than 5" << endl;
+        }else if(l == 5){
+            cout << "equal to 5" << endl;
+        }else{
+            cout << "greater than 5" << endl;
+        }
+        ++l;
+    };
+
+    int counter = 5;
+    for (int i = 0; i < counter; ++i){
+        cout << "Hello emmy" << endl;
+    };
+
+
+//////////////////////////
+
+
+    int numGrid[3][2][2] = {
+    {
+        {1,2},{3,4}
+    },
+
+    {
+        {5,6},{7,8}
+    },
+
+    {
+        {9,10},{11,12}
+    }
+
+    };
+
+    cout << numGrid[2][1][0]<<endl;
+
+//////////////////////////
+
+
+    int age = 20;
+    int* pAge = &age;
+    cout << pAge << endl;
+    age = 30;
+    cout << pAge << endl;
+
+    //delete pAge;
+    int oo = 98;
+    pAge = &oo;
+    cout << pAge << endl;
+
+
+//////////////////
+
+    string cash;
+    cout<<"how much money is it:";
+    getline(cin, cash);
+    cout << cash << endl;*/
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+manuel\dphone>git remote
+heroku
+
+(env) C:\Users\emmanuel\dphone>heroku
+CLI to interact with Heroku
+
+VERSION
+  heroku/7.53.0 win32-x86 node-v12.21.0
+
+USAGE
+  $ heroku [COMMAND]
+
+COMMANDS
+  access          manage user access to apps
+  addons          tools and services for developing, extending, and operating your app
+  apps            manage apps on Heroku
+  auth            check 2fa status
+  authorizations  OAuth authorizations
+  autocomplete    display autocomplete installation instructions
+  buildpacks      scripts used to compile apps
+  certs           a topic for the ssl plugin
+  ci              run an application test suite on Heroku
+  clients         OAuth clients on the platform
+  config          environment variables of apps
+  container       Use containers to build and deploy Heroku apps
+  domains         custom domains for apps
+  drains          forward logs to syslog or HTTPS
+  features        add/remove app features
+  git             manage local git repository for app
+  help            display help for heroku
+  keys            add/remove account ssh keys
+  labs            add/remove experimental features
+  local           run Heroku app locally
+  logs            display recent log output
+  maintenance     enable/disable access to app
+  members         manage organization members
+  notifications   display notifications
+  orgs            manage organizations
+  pg              manage postgresql databases
+  pipelines       manage pipelines
+  plugins         list installed plugins
+  ps              Client tools for Heroku Exec
+  psql            open a psql shell to the database
+  redis           manage heroku redis instances
+  regions         list available regions for deployment
+  releases        display the releases for an app
+  reviewapps      manage reviewapps in pipelines
+  run             run a one-off process inside a Heroku dyno
+  sessions        OAuth sessions
+  spaces          manage heroku private spaces
+  status          status of the Heroku platform
+  teams           manage teams
+  update          update the Heroku CLI
+  webhooks        list webhooks on an app
+
+
+  
+
+
+
+
+
+
+<input type="{{ widget.type }}" name="{{ widget.name }}"{% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}{% for name, value in widget.attrs.items %}{% if value is not False %} {{ name }}{% if value is not True %}="{{ value|stringformat:'s' }}"{% endif %}{% endif %}{% endfor %}>
+
+
+
+
+
+
+<select name="{{ widget.name }}" {% for name, value in widget.attrs.items %}{% if value is not False %} {{ name }}{% if value is not True %}="{{ value|stringformat:'s' }}"{% endif %}{% endif %}{% endfor %}>
+{% for group_name, group_choices, group_index in widget.optgroups %}{% if group_name %}
+  <optgroup label="{{ group_name }}">{% endif %}{% for option in group_choices %}
+  {% include option.template_name with widget=option %}{% endfor %}{% if group_name %}
+  </optgroup>{% endif %}{% endfor %}
+</select>
+
+
+
+<select name="{{ widget.name }}" {% for name, value in widget.attrs.items %}{% if value is not False %} {{ name }}{% if value is not True %}="{{ value|stringformat:'s' }}"{% endif %}{% endif %}{% endfor %}>
+{% for group_name, group_choices, group_index in widget.optgroups %}
+	{% for option in group_choices %}
+  	{% include option.template_name with widget=option %}
+  	{% endfor %}
+{% endfor %}
+</select>
+
+
+
+<select name="{{ widget.name }}" {% for name, value in widget.attrs.items %}{% if value is not False %} {{ name }}{% if value is not True %}="{{ value|stringformat:'s' }}"{% endif %}{% endif %}{% endfor %}>
+{% for group_name, group_choices, group_index in widget.optgroups %}
+	{% for option in group_choices %}
+  	{% include option.template_name with widget=option %}
+  	{% endfor %}
+{% endfor %}
+</select>
+
+{% for group_name, group_choices, group_index in widget.optgroups %}
+	{% for option in group_choices %}
+  	{% include option.template_name with widget=option %}
+
+  	<option value="{{ widget.value|stringformat:'s' }}" {% for name, value in widget.attrs.items %}{% if value is not False %} {{ name }}{% if value is not True %}="{{ value|stringformat:'s' }}"{% endif %}{% endif %}{% endfor %}>{{ widget.label }}</option>
+        <input type="text" />{{ option }}
+
+  	{% endfor %}
+{% endfor %}
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<style type="text/css">
+	.multiselect {
+	  width: 200px;
+	}
+
+	.selectBox {
+	  position: relative;
+	}
+
+	.selectBox select {
+	  width: 100%;
+	  font-weight: bold;
+	}
+
+	.overSelect {
+	  position: absolute;
+	  left: 0;
+	  right: 0;
+	  top: 0;
+	  bottom: 0;
+	}
+
+	#checkboxes {
+	  display: none;
+	  border: 1px #dadada solid;
+	}
+
+	#checkboxes label {
+	  display: block;
+	}
+
+	#checkboxes label:hover {
+	  background-color: #1e90ff;
+	}
+	</style>
+</head>
+<body>
+
+<select name="{{ widget.name }}" {% for name, value in widget.attrs.items %}{% if value is not False %} {{ name }}{% if value is not True %}="{{ value|stringformat:'s' }}"{% endif %}{% endif %}{% endfor %}>
+    <option>Select an option</option>
+
+{% for group_name, group_choices, group_index in widget.optgroups %}
+	{% for option in group_choices %}
+
+  	<option value="{{ option.value|stringformat:'s' }}" {% for name, value in option.attrs.items %}{% if value is not False %} {{ name }}{% if value is not True %}="{{ value|stringformat:'s' }}"{% endif %}{% endif %}{% endfor %}>{{ option.label }}</option>
+
+  	{% endfor %}
+{% endfor %}
+
+</select>
+
+<div id="checkboxes">
+{% for group_name, group_choices, group_index in widget.optgroups %}
+	{% for option in group_choices %}
+
+	<label for="{{ option.label }}">
+        <input type="checkbox" id="{{ option.label }}" />{{ option.label }}
+    </label>
+
+  	{% endfor %}
+{% endfor %}
+</div>
+
+
+<script>
+var expanded = false;
+
+function showCheckboxes() {
+  var checkboxes = document.getElementById("checkboxes");
+  if (!expanded) {
+    checkboxes.style.display = "block";
+    expanded = true;
+  } else {
+    checkboxes.style.display = "none";
+    expanded = false;
+  }
+}
+
+  
+</script>
+
+</body>
+</html>
+
+

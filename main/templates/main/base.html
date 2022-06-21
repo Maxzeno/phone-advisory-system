@@ -1,0 +1,341 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="hhhhh">
+    <meta name="keywords" content="hhh">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>{% block title %}{% endblock %}</title>
+    
+  <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+  <link rel="stylesheet" type="text/css" href="{% static 'fontawesome-free-6.1.1-web/css/all.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'icons-1.5.0/font/bootstrap-icons.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'icons-1.8.1/font/bootstrap-icons.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'bootstrap-5.1.1/dist/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'bootstrap-4.0.0/dist/css/bootstrap.min.css' %}">
+
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+  <style>
+
+  </style>
+
+  {% block style %} {% endblock %}
+</head>
+<body>
+<nav id="mainNav" style="background-color: #1a1d20;" class="bg-darks container-fluid d-flex py-3">
+
+  <div class="text-light pe-4" style="cursor: pointer;" onclick="emmaNavOpen()">&#9776;</div>
+  <a href="{% if request.user.is_authenticated %}/discover{% else %}/{% endif %}"><img src="{% static 'img/phoniebg.png' %}" style="max-height: 1.5rem"></a>
+
+    <!-- <form style="max-width: 50vw" class="d-flex mx-3 form-inline navbar-search py-0 my-0" id="subscribeForm">
+            <div class="input-group w-100 py-0 my-0">
+
+              <input type="text" class=" py-0 my-0 form-control bg-light border-0 small" name="email" id="email" placeholder="Phone name " aria-label="Search" aria-describedby="basic-addon2">
+              <div class="input-group-append py-0 my-0 ">
+                <button class=" py-0 my-0 btn btn-success text-d shadow-none" type="button" id="subscribe">
+                  <i class="bi bi-search"></i>
+                </button>
+              </div>
+            </div>
+          </form> -->
+          <!-- <form class="ms-5 d-md-inline d-none">
+            <input class="" size="50" type="text" placeholder="Phone name" name="nav-input" id="nav-input"><i style="position: relative; right: 25px;" class="bi bi-search"></i>
+          </form> -->
+  <div class="text-right text-light d-flex" style="position: absolute; right: 1rem;">
+      
+
+
+{% if request.path == '/discover/' or request.path == '/'  %}
+        <a href="#" id="searchIcon" class="emma-a-light me-2"><i class="bi bi-search me-2" style="font-size: 1.3em; line-height: 0; cursor: pointer;"></i></a>
+
+<div id="search-input" style="display: none;">
+<div style="position: fixed; z-index: 2000; right: 0; left:0; top:50px" class="search-size">
+<div class="rounded py-2 px-2 bg-white shadow-sm">
+
+
+{% block  SearchForm %}
+
+{% endblock %}
+
+  <!-- <form class="form-inline w-100">
+          <i style="position: relative; left: 25px;vertical-align: middle;" class="bi bi-search text-dark"></i>
+            <input style="text-indent: 20px;width: 70%" class="form-control" type="text" placeholder="Phone name" name="nav-input" id="nav-input"><button class="btn btn-danger ms-3">close</button>
+          </form> -->
+</div>
+</div>
+</div>
+      
+{% endif %}
+        {% block icon %}{% endblock %}
+
+
+        <!-- <a href="/favourite" class="emma-a-light"><i class="bi bi-favourite3 favourite-badge" value="{{ l }}" style="font-size: 1.3em; line-height: 0;"></i></a> -->
+
+
+        <a href="/favourite" class="emma-a-light"><ul style="list-style-type: none;padding: 0;margin:0;"><li class="favourite-badge" value="{{ l }}"><i class="bi bi-bookmark-plus" style="font-size: 1.3em; line-height: 0;"></i></li></ul></a>
+
+{% if request.user.is_authenticated %}
+    <a class="emma-a-light" id="drop-nav-icon" style="cursor: pointer;">
+      <i class="bi bi-three-dots-vertical" style="line-height: 0; font-size: 1.3em"></i>
+      </a>
+
+      <div style="position: relative;">
+<div id="drop-navbar-element" style="display: none;">
+  <div class="border rounded shadow-sm bg-white text-dark text-start" style="position: fixed; z-index: 2000; right: 0;margin-right: 0.5rem;margin-top: 35px">
+              {% if request.user.is_authenticated %}<a href="/discover" class="drop-nav"><div class="py-2 px-3 border-bottom drop-nav-bg"><i class="bi bi-table me-2" style="line-height: 0; font-size: 1.3em"></i> Discover </div></a>
+              {% else %}
+              <a href="/" class="drop-nav"><div class="py-2 px-3 border-bottom drop-nav-bg"><i class="bi bi-table me-2" style="line-height: 0; font-size: 1.3em"></i> Explore </div></a>
+              {% endif %}
+
+              <!-- <a href="/dashboard" class="drop-nav"><div class="py-2 px-3 border-bottom drop-nav-bg"><i class="bi bi-speedometer2 me-2" style="line-height: 0; font-size: 1.3em"></i> Dashboard</div></a> -->
+              <a href="/settings" class="drop-nav"><div class="py-2 px-3 border-bottom drop-nav-bg"><i class="bi bi-gear me-2" style="line-height: 0; font-size: 1.3em"></i> Settings</div></a>
+              <a href="/signout" class="drop-nav"><div class="py-2 px-3 pb-2 drop-nav-bg"><i class="bi bi-power me-2" style="line-height: 0; font-size: 1.3em"></i> Signout</div></a>
+          </div>
+</div>
+</div>
+      
+      {% else %}
+      <!-- <a href="/signup" class="emma-a-light" style="cursor: pointer;">
+      <span class=""><i class="bi bi-person" value="5" style="font-size: 1.3em; line-height: 0;"></i></span>
+      <span class="d-sm-inline d-none">signup</span>
+
+      </a> -->
+
+
+
+     <a href="/signup" class="emma-a-light ms-1"style="cursor: pointer;">
+      <i class="bi bi-person d-none d-sm-inline" value="5" style="font-size: 1.3em; line-height: 0;"></i>
+      <span class="signup-vary-sm" style="font-size: 1em;font-weight: normal;">
+        Signup</span>
+      </a>
+{% endif %}
+
+  </div>
+</nav>
+
+
+
+
+<div id="emmaNav" class="shadow-sm sidebar-menubar bg-white">
+  <div class="border-bottom px-4 py-3"  style="background-color: #1a1d20">
+    <div class="row">
+      <div  class="col-10">
+        <a href="{% if request.user.is_authenticated %}/discover{% else %}/{% endif %}"><img src="{% static 'img/phoniebg.png' %}" style="max-height: 1.5rem"></a>
+      </div>
+      <div id="iconSideBar" class="col-2"><i class="bi bi-x text-light" style="font-size: 1.37rem;line-height: 0;cursor: pointer;" onclick="emmaNavclose()"></i></div>
+    </div>
+  </div>
+
+{% if request.user.is_authenticated %}
+
+ <div class="px-4 pt-4 bg-white" style="font-size: 1.1em;"><i class="bi bi-table me-2"></i><a href="/discover" class="emma-a">Discover</a></div>
+
+   <div class="px-4 pt-3 bg-white" style="font-size: 1.1em;"><i class="bi bi-bookmark-plus me-2"></i><a href="/favourite" class="emma-a">Favourite</a></div>
+
+ <div class="px-4 pt-3 bg-white" style="font-size: 1.1em;"><i class="bi bi-gear me-2"></i><a href="/settings" class="emma-a">Settings</a></div>
+
+  <div class="px-4 pt-3">OTHERS</div>
+
+    <div class="px-4 pt-3 bg-white" style="font-size: 1.1em;"><i class="bi bi-telephone me-2"></i><a href="/contact" class="emma-a">Contact</a></div>
+  <div class="px-4 pt-3 bg-white" style="font-size: 1.1em;"><i class="bi bi-patch-question me-2"></i><a href="/faqs" class="emma-a">FAQs</a></div>
+  
+  <!-- <div class="px-4 pt-2 bg-white" style="font-size: 1.1em;">
+    <i class="bi bi-geo-alt-alt me-2"></i><span href="#" class="emma-a" style="cursor: pointer;" id="addressIcon">Address<i class="bi bi-chevron-down ms-1" style="font-size: 0.9em;"></i></span></div> -->
+<!-- <div id="addressDrop" style="display: none;">
+  <div class="px-5 mx-2 pt-2 bg-white"><a href="/address" class="emma-a">Create</a></div>
+  <div class="px-5 mx-2 pt-2 bg-white"><a href="/address-show" class="emma-a">View</a></div>
+</div> -->
+
+    {#<div class="px-4 pt-3 bg-white" id="countryIcon" style="font-size: 1.1em"><i class="bi bi-geo-alt me-2"></i><a href="/settings/information"  class="emma-a">{% if request.user.country %}{{ request.user.country }}{% else %}None{% endif %}</a></div>#}
+
+
+   <div class="px-4 pt-3 bg-white" style="font-size: 1.1em;"><i class="bi bi-power me-2"></i><a href="/signout" class="emma-a">Signout</a></div>
+{% else %}
+
+  <div class="px-4 pt-4 bg-white" style="font-size: 1.1em;"><i class="bi bi-table me-2"></i><a href="/" class="emma-a">Explore</a></div>
+
+  
+  <div class="px-4 pt-3 bg-white" style="font-size: 1.1em;"><i class="bi bi-bookmark-plus me-2"></i><a href="/favourite" class="emma-a">Favourite</a></div>
+
+<div class="px-4 pt-3 bg-white" style="font-size: 1.1em;"><i class="bi bi-megaphone me-2"></i><a href="/about" class="emma-a">About</a></div>
+
+  <div class="px-4 pt-3 bg-white" style="font-size: 1.1em;"><i class="bi bi-patch-question me-2"></i><a href="/faqs" class="emma-a">FAQs</a></div>
+
+   <div class="px-4 pt-3 bg-white" style="font-size: 1.1em;"><i class="bi bi-telephone me-2"></i><a href="/contact" class="emma-a">Contact</a></div>
+
+      <div class="px-4 pt-3 bg-white" style="font-size: 1.1em;"><i class="bi bi-box-arrow-in-right me-2"></i><a href="/signin" class="emma-a">Signin</a></div>
+
+        <div class="px-4 pt-3 my-2 text-center"><a href="/signup" class="emma-as btn btn-sm btn-success w-100">Signup</a></div>
+{% endif %}
+
+ 
+
+
+</div>
+
+<div id="body-div">
+
+<div class="{% block container_fluid %}container-fluid{% endblock %}" style="" onclick="emmaNavclose()">
+
+    {% block body %} {% endblock %}
+  </div>
+
+{% if request.path != '/'  %}
+
+<div id="footer-short">
+            <div class="text-center">
+                <span>
+                  Copyright &copy; 2022 Phonie | <a href="/tos" class="emma-a">terms of service</a> | <a href="/privacy-policy" class="emma-a"> privacy policy </a>
+                </span>
+            </div>
+        </div> 
+{% else %}
+
+<footer class="fs-6 text-light" style="background-color: #111;">
+
+<div class="container">
+
+      <div class="pt-4">
+        <div class="row">
+            <!--Footer Main Pages -->
+            <div class="col-md-5 col-sm-5 col-lg-3 col-6 pb-5">
+                <h4 class=" mb-4 ">Info</h4>
+                <div class="mb-0">                       
+                    <a href="/" class="emma-a-light d-block mt-2">Home</a>
+                    <a href="/about/" class="emma-a-light d-block mt-2">About</a>
+                    <a href="/faqs/" class="emma-a-light d-block mt-2">FAQ</a> 
+                    <a href="/contact/" class="emma-a-light d-block mt-2">Contact</a> 
+                    
+                </div>
+            </div>
+
+                    <!-- Footer Social Icons-->
+            <div class="col-md-5 col-sm-5 col-lg-3 col-6 pb-5">
+                <h4 class=" mb-4 pl-2">Reach us</h4>
+                 
+                <a href="#"><img src="{% static 'img/facebookicon.png' %}"></a>
+    
+                <a href="#"><img src="{% static 'img/twittericon.png' %}"></a>
+            
+                <a href="#"><img src="{% static 'img/instagramicon.png' %}"></a>
+            
+                <a href="#"><img src="{% static 'img/snapchaticon.png' %}"></a>
+           
+                <a href="#"><img src="{% static 'img/tiktokicon.png' %}"></a>
+        
+                <a href="#"><img src="{% static 'img/trillericon.png' %}"></a>
+            
+            </div>
+
+            <!-- Footer About Text-->
+            <div class="col-md-6 col-sm-11 col-lg-5">
+                <div class="control-group">
+                    <form action="/newsletter/" method="post" class="form-group floating-label-form-group controls pb-2">
+
+                        <div class="d-inline-block">
+                        
+                        {% block newsletterForm %}
+
+                        {% endblock %}
+                        </div>
+
+                        <button class="btn btn-danger">Submit</button>
+
+                        
+                    </form>
+                </div>
+            </div>
+
+
+  </div>
+  </div>
+</div>
+
+
+</footer>
+
+
+
+<div style="position: absolute;left: 0; right: 0; background-color: rgba(0,0,0,0.2);">
+    <div class="text-center">
+          <span>Copyright &copy; 2022 phonie | <a href="/tos" class="emma-a">terms of service</a> | <a href="/privacy-policy" class="emma-a"> privacy policy </a>
+        </span>
+    </div>
+</div>
+</div>
+{% endif %}
+
+
+
+
+<script src="{% static 'fontawesome-free-6.1.1-web/js/all.js' %}"></script>
+<script src="{% static 'bootstrap-5.1.1/dist/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'bootstrap-4.0.0/dist/js/bootstrap.min.js' %}"></script>
+
+<script src="{% static 'js/main.js' %}"></script>
+
+<script>
+
+{% if request.path != '/'  %}
+
+
+footerShortLocation() 
+{% endif %}
+
+</script>
+
+<script>
+  {% if request.user.is_authenticated %}
+  document.querySelector('#drop-nav-icon').addEventListener('click', dropNavBarElement);
+{% endif %}
+  document.querySelector('#body-div').addEventListener('click', closeDropNavBarElement);
+
+  document.addEventListener('scroll', closeDropNavBarElement);
+
+  document.addEventListener('scroll', emmaNavclose);
+
+
+</script>
+
+<script>
+
+
+  function search() {
+    check = document.querySelector('#search-input').style.display
+
+    if (check == 'none'){
+      document.querySelector('#search-input').style.cssText = 'display: block;'
+    }else if (check == 'block'){
+      document.querySelector('#search-input').style.display = 'none'
+
+    }
+  }
+
+   function searchBlock() {
+    check = document.querySelector('#search-input').style.display
+
+    if (check == 'block'){
+      document.querySelector('#search-input').style.cssText = 'display: none;'
+    }
+  }
+  document.querySelector('#searchIcon').addEventListener('click', search)
+  document.addEventListener('scroll', searchBlock)
+  document.querySelector('#body-div').addEventListener('click', searchBlock)
+
+
+
+
+</script>
+
+{% block script %} 
+
+{% endblock %}
+
+
+</body>
+</html>
