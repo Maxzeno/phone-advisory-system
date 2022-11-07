@@ -26,7 +26,7 @@ SECRET_KEY = config('SECRET_KEY', 'djbdfn23433423K#E#EKWJ$*($hj$#IK$')
 DEBUG = True
 _DEBUG_ENV = False
 
-ALLOWED_HOSTS = ['phone-advisory.onrender.com', '127.0.0.1']
+ALLOWED_HOSTS = ['phone-advisory2.onrender.com', '127.0.0.1']
 
 
 # Application definition
