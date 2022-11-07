@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = config('SECRET_KEY', 'djbdfn23433423K#E#EKWJ$*($hj$#IK$')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 _DEBUG_ENV = False
 
 ALLOWED_HOSTS = ['phone-advisory.onrender.com', '127.0.0.1']
