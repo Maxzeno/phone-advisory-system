@@ -32,9 +32,9 @@ class Phones(models.Model):
     # id = models.IntegerField(primary_key=True)
     brand = models.CharField(max_length=100, blank=True, null=True)
     year = models.CharField(max_length=100, blank=True, null=True)
-    phone_image_front = models.FileField(upload_to='static/images/', blank=True, null=True)
-    phone_image_back = models.FileField(blank=True, null=True)
-    phone_image_side = models.FileField(upload_to='side', blank=True, null=True)
+    phone_image_front = models.FileField(upload_to='images/', blank=True, null=True)
+    phone_image_back = models.FileField(upload_to='images/', blank=True, null=True)
+    phone_image_side = models.FileField(upload_to='images/', blank=True, null=True)
     name = models.CharField(max_length=100, blank=True, unique=True, null=True)
     price = models.FloatField(blank=True, null=True) # in dollar
     # price_min = models.FloatField(blank=True, null=True) # in dollar

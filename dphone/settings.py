@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
-
+from decouple import config
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -20,10 +20,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '^=k8^m1m@gd&+a@g6up*tfi^67g^e%8uv0y!sqzc()$=dw03gb'
+SECRET_KEY = config('SECRET_KEY', 'djbdfn23433423K#E#EKWJ$*($hj$#IK$')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+_DEBUG_ENV = False
 
 ALLOWED_HOSTS = ['phoneemma.herokuapp.com', '127.0.0.1']
 
@@ -43,6 +44,11 @@ INSTALLED_APPS = [
     'registration',
     'manage',
 ]
+
+if not _DEBUG_ENV:
+    INSTALLED_APPS.append('cloudinary')
+    INSTALLED_APPS.append('cloudinary_storage')
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -94,7 +100,9 @@ WSGI_APPLICATION = 'dphone.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-if DEBUG:
+
+
+if _DEBUG_ENV:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -105,12 +113,12 @@ if DEBUG:
 else:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'd1f6fspp8ogf8g',
-            'HOST': 'ec2-34-201-95-176.compute-1.amazonaws.com',
-            'PORT': 5432,
-            'USER': 'otnlpfetrjecrf',
-            'PASSWORD': '5c6fd87aa89216709f28e05e0b1c749aa568b4f45b5ba9a3f8e2dc1a114e5f34',
+            'ENGINE': config('DATABASES_DEFAULT_ENGINE', 'django.db.backends.postgresql'),
+            'NAME': config('DATABASES_DEFAULT_NAME'),
+            'HOST': config('DATABASES_DEFAULT_HOST'),
+            'PORT': int(config('5DATABASES_DEFAULT_PORT', 5432)),
+            'USER': config('DATABASES_DEFAULT_USER'),
+            'PASSWORD': config('DATABASES_DEFAULT_PASSWORD'),
 
         }
     }
@@ -157,29 +165,45 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# MEDIA_ROOT = '/static/media-images/'
-
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATICFILES_DIRS = [
    os.path.join(BASE_DIR, 'user/static/')
 ]
 
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+if not _DEBUG_ENV:
+
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+    CLOUDINARY_STORAGE = {
+        'CLOUD_NAME': config('CLOUDINARY_STORAGE_CLOUD_NAME', 'dlwilbknx'),
+        'API_KEY': config('CLOUDINARY_STORAGE_API_KEY'),
+        'API_SECRET': config('CLOUDINARY_STORAGE_API_SECRET')
+    }
+
+
+
+
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
 ###DEVELOPMENT
-if DEBUG:
+if _DEBUG_ENV:
     EMAIL_HOST = 'localhost'
     EMAIL_PORT = '1025'
 
 ###PRODUCTION
 else:
-    EMAIL_HOST = 'smtp.gmail.com'
-    EMAIL_HOST_USER = 'nwaegunwaemmauel@gmail.com'
-    EMAIL_HOST_PASSWORD = 'yllzkejaxzhmpeuc'
-    EMAIL_PORT = '587'
-    EMAIL_USE_TLS = True
+    EMAIL_HOST = config('EMAIL_HOST', 'smtp.gmail.com')
+    EMAIL_HOST_USER = config('EMAIL_HOST_USER', 'nwaegunwaemmauel@gmail.com')
+    EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+    EMAIL_PORT = config('EMAIL_PORT', '587')
+    EMAIL_USE_TLS = bool(config('EMAIL_USE_TLS', True))
 
 
 LOGIN_URL = '/signin/'
