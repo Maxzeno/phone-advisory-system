@@ -1,67 +1,13 @@
+from django import forms, db
 from random import randint
-import json
 from . import models
 from .models import Q, Recommendation
-from django import forms
-from django import template
+import my_packages.recommendation as prc
 from shortuuid import ShortUUID
 import random
 import joblib
 import json
-import my_packages.recommendation as prc
 import pickle
-
-
-register = template.library.Library()
-
-@register.filter(is_safe=True)
-def emme(q=6):
-	return q+5
-
-# register.filter('emme', emme)
-
-
-
-# def sorter(lst):
-# 	length = len(lst)
-# 	for i in range(0, length):
-# 		for j in range(0, length-i-1):
-# 			if lst[j][1] < lst[j+1][1]:
-# 				temp = lst[j]
-# 				lst[j] = lst[j+1]
-# 				lst[j+1] = temp
-# 	return lst
-
-
-# def sorter(lst):
-# 	length = len(lst)
-# 	for i in range(0, length):
-# 		for j in range(0, length-i-1):
-# 			if isinstance(lst[j], tuple) and isinstance(lst[j+1], tuple):
-# 				if lst[j][1] < lst[j+1][1]:
-# 					temp = lst[j][0]
-# 					lst[j] = lst[j+1][0]
-# 					lst[j+1] = temp
-# 			elif not isinstance(lst[j], tuple) and isinstance(lst[j+1], tuple):
-# 				if lst[j] < lst[j+1][1]:
-# 					temp = lst[j]
-# 					lst[j] = lst[j+1][0]
-# 					lst[j+1] = temp
-
-# 			elif isinstance(lst[j], tuple) and not isinstance(lst[j+1], tuple):
-# 				if lst[j][1] < lst[j+1]:
-# 					temp = lst[j][0]
-# 					lst[j] = lst[j+1]
-# 					lst[j+1] = temp
-
-# 			elif not isinstance(lst[j], tuple) and not isinstance(lst[j+1], tuple):
-# 				if lst[j] < lst[j+1]:
-# 					temp = lst[j]
-# 					lst[j] = lst[j+1]
-# 					lst[j+1] = temp
-
-# 	return lst
-
 
 
 header = [
@@ -187,8 +133,6 @@ class Filter():
 					model_phone_list.append(the_phone)
 
 			return model_phone_list, len(get_pickled)
-
-
 
 		all_recommendations = []
 
@@ -317,7 +261,6 @@ class Filter():
 			return False
 
 
-		
 def know_anonymous(request):
 		anonymous_user_id = request.session.get('anonymous_user_id')
 		if anonymous_user_id:
@@ -334,19 +277,14 @@ def know_anonymous(request):
 		else:
 			'not found'
 
-	
-
-
 
 def randomise(any_iterable):
-	# return any_iterable[randint(0, len(any_iterable)-1)]
 	return random.choice(any_iterable)
 
+
 def name_phone_and_brand(brand, als, nums):
-	# return any_iterable[randint(0, len(any_iterable)-1)]
 	the_brand = random.choice(brand)
 	return the_brand, the_brand + ' ' + random.choice(nums) + ' ' + random.choice(als)
-
 
 
 def length_favourite(request):
@@ -358,29 +296,24 @@ def length_favourite(request):
 
 	return len(list_favourite)
 
+
 def choice_field_tuple(col: str, default: str=None) -> list :
-	if default:
-		q = [ (i[0], i[0]) for i in models.Phones.objects.values_list(col).distinct() if i[0] != None ]
-		# q = []
-		try:
-			q.sort()
-		except TypeError:
-			pass
-		q.insert(0, ('', default))
-		return q
+	try:
+		if default:
+			q = [ (i[0], i[0]) for i in models.Phones.objects.values_list(col).distinct() if i[0] != None ]
+			try:
+				q.sort()
+			except TypeError:
+				pass
+			q.insert(0, ('', default))
+			return q
 
-	q = [ (i[0], i[0]) for i in models.Phones.objects.values_list(col).distinct() ]
-	# q = []
-	q.sort()
+		q = [ (i[0], i[0]) for i in models.Phones.objects.values_list(col).distinct() ]
+		q.sort()
+	except db.utils.OperationalError:
+		q = ()
+
 	return q
-
-
-# def distinct_list(col: str) -> list :
-# 	return [ i[0] for i in models.Phones.objects.values_list(col).distinct() ]
-
-
-# def distinct_dict(col: str) -> list :
-	# return [ i[0] for i in models.Phones.objects.values(col).distinct() ]
 
 
 def range_dict(active_page, pages):
@@ -402,17 +335,3 @@ def range_dict(active_page, pages):
 		dct['range_stop'] = active_page + pages_on_sides + 1
 
 	return dct
-
-
-class EmmaCustomSelect(forms.widgets.Select):
-    template_name = 'emmacustomselect.html'
-
-
-class EmmaCustomSelect(forms.widgets.Select):
-    template_name = 'emmacustomselect.html'
-
-
-class ButtonInput(forms.widgets.Input):
-    input_type = 'button'
-    template_name = 'button.html'
-

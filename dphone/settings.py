@@ -24,9 +24,9 @@ SECRET_KEY = config('SECRET_KEY', 'djbdfn23433423K#E#EKWJ$*($hj$#IK$')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-_DEBUG_ENV = False
+_DEBUG_ENV = True
 
-ALLOWED_HOSTS = ['phone-advisory2.onrender.com', '127.0.0.1']
+ALLOWED_HOSTS = ['phone-advisory2.onrender.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -107,6 +107,7 @@ if _DEBUG_ENV:
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3-2'),
         }
     }
 
@@ -116,7 +117,7 @@ else:
             'ENGINE': config('DATABASES_DEFAULT_ENGINE', 'django.db.backends.postgresql'),
             'NAME': config('DATABASES_DEFAULT_NAME'),
             'HOST': config('DATABASES_DEFAULT_HOST'),
-            'PORT': int(config('5DATABASES_DEFAULT_PORT', 5432)),
+            'PORT': int(config('DATABASES_DEFAULT_PORT', 5432)),
             'USER': config('DATABASES_DEFAULT_USER'),
             'PASSWORD': config('DATABASES_DEFAULT_PASSWORD'),
 

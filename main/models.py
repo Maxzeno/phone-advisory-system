@@ -31,14 +31,12 @@ class Newsletter(models.Model):
 
 
 class FAQs(models.Model): 
-    # id = models.IntegerField(primary_key=True)
     question = models.CharField(max_length=200)
     answer = models.TextField() 
     date_added = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return str(self.question)
-
 
     class Meta:
         verbose_name_plural = 'FAQ'

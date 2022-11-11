@@ -1,9 +1,9 @@
 from django.urls import path
+from django.contrib.auth.decorators import login_required
 from .views import (
 	Discover, Favourite, Settings, Contact, Resetter, FullName,
 	Security, SecurityResetPassword,
 	)
-from django.contrib.auth.decorators import login_required
 
 
 app_name = 'user'

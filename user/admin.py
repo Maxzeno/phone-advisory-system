@@ -1,6 +1,5 @@
 from django.contrib import admin
-from .models import (Phones, Userfilter, 
-	 Contact, Recommendation)
+from .models import Phones, Userfilter, Contact, Recommendation
 
 # Register your models here.
 

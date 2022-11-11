@@ -1,9 +1,6 @@
 from django import forms
 from .models import Phones
-from .utils import choice_field_tuple, EmmaCustomSelect, ButtonInput
-
-# print(help(forms.ModelChoiceField))
-
+from .utils import choice_field_tuple
 
 
 class FullNameForm(forms.Form):
@@ -18,25 +15,10 @@ class ContactForm(forms.Form):
     	'rows':'5',
     	}))
 
-
-# class PersonalInfomationForm(forms.Form):
-#     first_name = forms.CharField(label='First Name', widget=forms.TextInput(attrs={'placeholder': 'Your name'}))
-#     last_name = forms.CharField(label='Last Name', widget=forms.TextInput(attrs={'placeholder': 'Your name'}))
-#     phone_number = forms.CharField(label='Phone number', widget=forms.TextInput(attrs={'placeholder': 'Phone number'}))
-#     gender = forms.ChoiceField(label='Gender', choices=(('gender', 'Gender'), ('male', 'Male'), ('female', 'Female'), ('complicated', 'Complicated')))   
-#     country = forms.ChoiceField(label='Country', choices=()) 
-#     state = forms.ChoiceField(label='State', choices=())     
-#     city = forms.CharField(label='City', widget=forms.TextInput(attrs={'placeholder': 'Your City'}))
-#     address = forms.CharField(label='Address', widget=forms.TextInput(attrs={'placeholder': 'Where you live'}))
-
-
 class PhoneForm(forms.Form):
-    # name = forms.ModelChoiceField(Phones.objects.all(), required=False)#, widget=EmmaCustomSelect())
     brand = forms.ChoiceField(choices=choice_field_tuple('brand', '-'*8), required=False)
     year = forms.ChoiceField(choices=choice_field_tuple('year', '-'*8), required=False)
     price = forms.FloatField(label='Budget', required=False)
-    # price_min = forms.FloatField(label='Price min', required=False)
-    # price_max = forms.FloatField(label='Price max', required=False)
     network = forms.ChoiceField(choices=choice_field_tuple('network', '-'*8), required=False)
     body_form_factor = forms.ChoiceField(choices=choice_field_tuple('body_form_factor', '-'*8), required=False)
     body_color = forms.ChoiceField(choices=choice_field_tuple('body_color', '-'*8), required=False)

@@ -17,8 +17,6 @@ from user.views import Discover
 import csv
 
 
-
-
 class Index(Discover):
 	template = 'main/index.html'
 	extra_context = {'newsletterForm': NewsletterForm()}
@@ -47,10 +45,7 @@ class Newsletter(View):
 
 class About(View):
 	def get(self, request):
-		# abouts = models.About.objects.all()
-			
 		return render(request, 'main/about.html', {
-			# 'abouts': abouts, 
 			'l': length_favourite(request)})
 
 
@@ -66,9 +61,7 @@ class FAQs(View):
 		pages = math.ceil(l / lm) 
 
 		dct = range_dict(active_page, pages)
-
 		faqs = FAQsModel.objects.order_by('date_added').reverse()[off: lm*active_page]
-			
 		return render(request, 'main/faqs.html', {
 			'dct': dct, 'pages': pages, 'active_page': active_page,
 			'rang': range(dct['range_start'], dct['range_stop']),
@@ -78,22 +71,17 @@ class FAQs(View):
 
 class PrivacyPolicy(View):
 	def get(self, request):
-		# privacypolicies = models.PrivacyPolicy.objects.all()
-			
 		return render(request, 'main/privacy_policy.html', {
-			# 'privacypolicies': privacypolicies, 
 			'l': length_favourite(request)})
 
 
 class TOS(View):
 	def get(self, request):
-		# tosies = models.Phones.TOS.all()
-			
 		return render(request, 'main/tos.html', {
-			# 'tosies': tosies, 
 			'l': length_favourite(request)})
 
 
+""" WILL BE REMOVED (USED TO AUTO ADD FAQS) """
 class CreateFAQs(View):
 	def get(self, request):
 		questions = ['Why Can\'t i login?', 'My filters is not reflecting?', 'My search is not woeking', 'i can\'t change my country', 'why does location icon say none']
@@ -109,13 +97,15 @@ class CreateFAQs(View):
 		return HttpResponse('done creating FAQs')
 			
 
-
+""" WILL BE REMOVED (USED TO AUTO ADD PHONES) """
 class CreatePhones(View):
 	def get(self, request, num):
 		price = [200, 365, 155, 2036, 88, 96, 567, 211, 96]
-		phone_image_front = ['img/51vf1R1wS9L._AC_UY218_.jpg', 'img/71DCZOdq92S._AC_UY218_ (1).jpg', 'img/71RxOftVoQL._AC_UY218_.jpg', 'img/618LuqyIX6L._AC_UY218_.jpg']
-		phone_image_back = ['img/51vf1R1wS9L._AC_UY218_.jpg', 'img/71DCZOdq92S._AC_UY218_ (1).jpg', 'img/71RxOftVoQL._AC_UY218_.jpg', 'img/618LuqyIX6L._AC_UY218_.jpg']
-		phone_image_side = ['img/51vf1R1wS9L._AC_UY218_.jpg', 'img/71DCZOdq92S._AC_UY218_ (1).jpg', 'img/71RxOftVoQL._AC_UY218_.jpg', 'img/618LuqyIX6L._AC_UY218_.jpg']
+		# images_list = ['img/51vf1R1wS9L._AC_UY218__gfuauf.jpg', 'img/71DCZOdq92S._AC_UY218__1_eckyyu.jpg', 'img/71RxOftVoQL._AC_UY218__cmgsmo.jpg', 'img/190_uta7bp.jpg']
+		images_list = ['img/51vf1R1wS9L._AC_UY218_.jpg', 'img/71DCZOdq92S._AC_UY218_ (1).jpg', 'img/71RxOftVoQL._AC_UY218_.jpg', 'img/618LuqyIX6L._AC_UY218_.jpg']
+		phone_image_front = images_list
+		phone_image_back = images_list
+		phone_image_side = images_list
 		# description = ['LG Stylo 6 (64GB, 4GB) 6.8", w/Built-in Stylus Pen, 4000mAh Battery, 4G LTE GSM T-Mobile Unlocked (AT&T, Metro, Straight Talk)',
 		# 'Samsung Galaxy A12 (A127F) 128GB Dual SIM, GSM Unlocked, (CDMA Verizon/Sprint Not Supported) Smartphone International Version',
 		# 'Google Pixel 6 Pro - 5G Android Phone - Unlocked Smartphone with Advanced Pixel Camera and Telephoto Lens - 128GB - Stormy Black',
@@ -190,6 +180,7 @@ class CreatePhones(View):
 		return HttpResponse('done creating')
 
 
+""" WILL BE REMOVED (USED TO AUTO ADD USERS) """
 class CreateUser(View):
 	def get(self, request, num):
 		email = 'qw%d@gmail.com'
@@ -198,9 +189,8 @@ class CreateUser(View):
 
 		num_in_db = models.User.objects.count()
 
-		for i in range(num_in_db+1, num_in_db+num)+1:
+		for i in range(num_in_db+1, num_in_db+num+1):
 			user = models.User(email=email%i, username=username%i)
 			user.set_password(password)
 			user.save()
 		return HttpResponse('done creating users')
-

@@ -67,10 +67,6 @@ class Discover(Filter, View):
 		else:
 			lst_favourite = []
 
-		# if query['filter_data']:
-		# 	self.userfilter(request, query['filter_data'])
-
-
 		filter_data = query['filter_data']
 		filter_data.pop('user_id', False)
 		params = query['params']
@@ -84,26 +80,11 @@ class Discover(Filter, View):
 			**self.extra_context
 		}
 		return render(request, self.template, context)
-		
-
-
-# if params:
-# 	cookie.set_cookie('filter', value=json.dumps(filter_data), max_age=1000000)
-# 	cookie.set_cookie('params', value=params, max_age=1000000)
-# 	cookie.set_cookie('query_str', value=query_str, max_age=1000000)
-
-# # key, value='', max_age=None, expires=None, path='/',
-# #                domain=None, secure=False, httponly=False, samesite=None):
-
-
-# return cookie
-
 
 
 class Resetter(View):
 	def get(self, request, redirect_url=''):
 		return redirect('/'+redirect_url+'/')
-
 
 
 class Favourite(View):
@@ -142,9 +123,7 @@ class FullName(View):
 	def get(self, request):
 		first_name = request.user.first_name
 		last_name = request.user.last_name
-
 		form = FullNameForm({'first_name': first_name, 'last_name': last_name})
-
 		return render(request, 'user/fullname.html', {'form':form, 'l':length_favourite(request)})
 
 	def post(self, request):
