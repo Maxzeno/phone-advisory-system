@@ -19,9 +19,9 @@ class Recommendation(models.Model):
 class Phones(models.Model):
     brand = models.CharField(max_length=100, blank=True, null=True)
     year = models.CharField(max_length=100, blank=True, null=True)
-    phone_image_front = models.FileField(upload_to='images/', blank=True, null=True)
-    phone_image_back = models.FileField(upload_to='images/', blank=True, null=True)
-    phone_image_side = models.FileField(upload_to='images/', blank=True, null=True)
+    phone_image_front = models.ImageField(upload_to='images/', blank=True, null=True)
+    phone_image_back = models.ImageField(upload_to='images/', blank=True, null=True)
+    phone_image_side = models.ImageField(upload_to='images/', blank=True, null=True)
     name = models.CharField(max_length=100, blank=True, unique=True, null=True)
     price = models.FloatField(blank=True, null=True) # in dollar
     network = models.CharField(max_length=100, blank=True, null=True)

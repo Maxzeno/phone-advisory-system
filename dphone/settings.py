@@ -24,7 +24,7 @@ SECRET_KEY = config('SECRET_KEY', 'djbdfn23433423K#E#EKWJ$*($hj$#IK$')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-_DEBUG_ENV = True
+_DEBUG_ENV = False
 
 ALLOWED_HOSTS = ['phone-advisory2.onrender.com', '127.0.0.1', 'localhost']
 
