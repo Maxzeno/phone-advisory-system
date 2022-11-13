@@ -1,8 +1,5 @@
 .env
-inspiration/
 __pycache__/
 env/
 /static/
-bootstrap-5.1.1-examples/
-phones.csv
 

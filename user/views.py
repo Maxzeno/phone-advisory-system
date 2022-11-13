@@ -143,7 +143,7 @@ class Security(View):
 		token = s.dumps(request.user.id, salt='email-reset')
 		link = request.get_host() + reverse('user:security-reset-password', kwargs={'token':token})
 
-		html_body = get_template('user/template_reset_password.html').render({'reset_password': link})
+		html_body = get_template('registration/template_reset_password.html').render({'reset_password': link})
 		msg = EmailMultiAlternatives('Confirmation email', f'Your confirmation link  {link}', 'nwaegunwaemmauel@gmail.com', ['mmnlchidera@gmail.com'])
 		msg.attach_alternative(html_body, "text/html")
 		msg.send()

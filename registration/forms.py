@@ -7,22 +7,6 @@ from django.contrib.auth import authenticate, login, logout, models
 from django.contrib import messages
 
 
-# class UserRegisterForm(UserCreationForm):
-# 	email = forms.EmailField(required=False)
-# 	phone_no = forms.CharField(required=False, max_length = 20)
-# 	first_name = forms.CharField(required=False, max_length = 20)
-# 	last_name = forms.CharField(required=False, max_length = 20)
-# 	class Meta:
-# 		model = User
-# 		fields = ['username', 'email', 'phone_no', 'password1', 'password2']
-
-
-# class ButtonInput(forms.widgets.Input):
-#     input_type = 'button'
-#     template_name = 'button.html'
-
-
-
 class SigninForm(forms.Form):
 	email = forms.EmailField(required=False, max_length=100, widget=forms.TextInput(attrs={
 		'placeholder':'you@gmail.com',
@@ -31,7 +15,6 @@ class SigninForm(forms.Form):
 	password = forms.CharField(required=False, max_length=32, widget=forms.PasswordInput(attrs={
 		'placeholder':'your password',
 	}))
-
 
 	def clean(self):
 		email = self.cleaned_data.get('email')
@@ -48,7 +31,6 @@ class SigninForm(forms.Form):
 		raise forms.ValidationError('Invalid Login')
 
 
-
 class SignupForm(forms.Form):
 	username = forms.CharField(required=False, max_length=100,  widget=forms.TextInput(attrs={
 		'placeholder':'your username',
@@ -60,30 +42,23 @@ class SignupForm(forms.Form):
 		'placeholder':'your password',
 		}))
 
-
 	def clean_username(self):
 		username = self.cleaned_data.get('username')
 		found_username = User.objects.filter(username=username.lower()).first()
-
 		if found_username:
 			raise forms.ValidationError('Username Exist')
-
 		return username.lower()
-
 
 	def clean_email(self):
 		email = self.cleaned_data.get('email')
 		found_email = User.objects.filter(email=email.lower()).first()
-
 		if found_email:
 			raise forms.ValidationError('Email Exist')
-
 		return email.lower()
 
 
 	def clean_password(self):
 		password = self.cleaned_data.get('password')
-
 		if len(password) < 8 or len(password) > 128:
 			if len(password) < 8:
 				raise forms.ValidationError('Password should be greater than 7 characters')
@@ -94,8 +69,6 @@ class SignupForm(forms.Form):
 
 		return password
             
-
-
 
 class ForgotPasswordForm(forms.Form):
 	email = forms.EmailField(required=False, max_length=100, widget=forms.TextInput(attrs={

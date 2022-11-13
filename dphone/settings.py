@@ -23,8 +23,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = config('SECRET_KEY', 'djbdfn23433423K#E#EKWJ$*($hj$#IK$')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-_DEBUG_ENV = True
+DEBUG = False
+_DEBUG_ENV = False
 
 ALLOWED_HOSTS = ['phone-advisory2.onrender.com', '127.0.0.1', 'localhost']
 
@@ -78,7 +78,6 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            # os.path.join(BASE_DIR, 'templates'),
             os.path.join(BASE_DIR, 'registration/templates'),
             os.path.join(BASE_DIR, 'user/templates'),
             os.path.join(BASE_DIR, 'main/templates'),
@@ -166,10 +165,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_DIRS = [
-   os.path.join(BASE_DIR, 'user/static/')
+   os.path.join(BASE_DIR, 'static/')
 ]
 
 MEDIA_URL = '/media/'
