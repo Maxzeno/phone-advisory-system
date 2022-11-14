@@ -9,6 +9,14 @@
 {% block body %}
 
 <div class="pb-5 pt-2">
+{% if messages %}
+{% for message in messages %}
+  <div class="alert {% if message.tags %} alert-{{ message.tags }} {% endif %} mt-4 text-center" role="alert">
+  {{ message }}
+  </div><br>
+{% endfor %}
+{% endif %}
+
 <div class=" pt-3">
 
 

@@ -105,6 +105,7 @@ class Signin(View):
 				know_anonymous(request)
 				return redirect(next_url or 'main:index')
 			else:
+				messages.warning(request, 'Confirm your email before you can signin.')
 				return redirect(reverse("registration:confirm-token", kwargs={"user_id": user.id}))
 
 		return render(request, 'registration/signin.html', {'form':form})
