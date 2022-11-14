@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY', 'djbdfn23433423K#E#EKWJ$*($hj$#IK$')
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -171,7 +171,13 @@ STATICFILES_DIRS = [
    os.path.join(BASE_DIR, 'static/')
 ]
 
-MEDIA_URL = '/media/'
+MEDIA_URL = '/media/'    
+
+# if not _DEBUG_ENV:
+#     MEDIA_URL = '/dphone/media/'
+# else:
+#     MEDIA_URL = '/media/'    
+
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
