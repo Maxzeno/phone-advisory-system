@@ -8,7 +8,7 @@ import random
 import joblib
 import json
 import pickle
-
+import sys
 
 header = [
 	'id', 'name', 'brand', 'year', 'price', 'network', 'body_form_factor', 'body_color', 
@@ -299,21 +299,24 @@ def length_favourite(request):
 
 def choice_field_tuple(col: str, default: str=None) -> list :
 	# try:
-	if default:
-		q = [ (i[0], i[0]) for i in models.Phones.objects.values_list(col).distinct() if i[0] != None ]
-		try:
-			q.sort()
-		except TypeError:
-			pass
-		q.insert(0, ('', default))
+	if sys.argv[1] not in ['migrate', 'makemigrations']:
+		if default:
+			q = [ (i[0], i[0]) for i in models.Phones.objects.values_list(col).distinct() if i[0] != None ]
+			try:
+				q.sort()
+			except TypeError:
+				pass
+			q.insert(0, ('', default))
+			return q
+
+		q = [ (i[0], i[0]) for i in models.Phones.objects.values_list(col).distinct() ]
+		q.sort()
+		# except db.utils.OperationalError:
+			# q = ()
+
 		return q
-
-	q = [ (i[0], i[0]) for i in models.Phones.objects.values_list(col).distinct() ]
-	q.sort()
-	# except db.utils.OperationalError:
-		# q = ()
-
-	return q
+	else:
+		return []
 
 
 def range_dict(active_page, pages):
