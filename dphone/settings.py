@@ -26,7 +26,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = False
 _DEBUG_ENV = False
 
-ALLOWED_HOSTS = ['phone-advisory2.onrender.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', config('ALLOWED_HOST')]
 
 
 # Application definition
