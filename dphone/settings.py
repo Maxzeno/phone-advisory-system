@@ -25,6 +25,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 _DEBUG_ENV = False
+_DEPLOY = False
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', config('ALLOWED_HOST')]
 
@@ -101,27 +102,27 @@ WSGI_APPLICATION = 'dphone.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 
-if _DEBUG_ENV:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3-2'),
-        }
+# if _DEBUG_ENV:
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3-2'),
     }
+}
 
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': config('DATABASES_DEFAULT_ENGINE', 'django.db.backends.postgresql'),
-            'NAME': config('DATABASES_DEFAULT_NAME'),
-            'HOST': config('DATABASES_DEFAULT_HOST'),
-            'PORT': int(config('DATABASES_DEFAULT_PORT', 5432)),
-            'USER': config('DATABASES_DEFAULT_USER'),
-            'PASSWORD': config('DATABASES_DEFAULT_PASSWORD'),
+# else:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': config('DATABASES_DEFAULT_ENGINE', 'django.db.backends.postgresql'),
+#             'NAME': config('DATABASES_DEFAULT_NAME'),
+#             'HOST': config('DATABASES_DEFAULT_HOST'),
+#             'PORT': int(config('DATABASES_DEFAULT_PORT', 5432)),
+#             'USER': config('DATABASES_DEFAULT_USER'),
+#             'PASSWORD': config('DATABASES_DEFAULT_PASSWORD'),
 
-        }
-    }
+#         }
+#     }
 
 # postgres://otnlpfetrjecrf:5c6fd87aa89216709f28e05e0b1c749aa568b4f45b5ba9a3f8e2dc1a114e5f34@ec2-34-201-95-176.compute-1.amazonaws.com:5432/d1f6fspp8ogf8g
 
