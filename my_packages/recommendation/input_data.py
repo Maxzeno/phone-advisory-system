@@ -1,6 +1,6 @@
-from py_recommendation.error import RecoError
-from py_recommendation.data import Item, Users
-from py_recommendation.utils import Utils
+from .error import RecoError
+from .data import Item, Users
+from .utils import Utils
 
 import pandas as pd
 import numpy as np

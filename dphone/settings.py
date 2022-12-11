@@ -23,12 +23,20 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-_DEBUG_ENV = False
-_DEPLOY = False
+DEBUG = bool(int(config('DEBUG', 0)))
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', config('ALLOWED_HOST')]
+# _DEPLOY = False
 
+# use local db, storage, email config create be me
+_TRY_LOCAL_DB = bool(int(config('_TRY_LOCAL_DB', 1)))
+_TRY_LOCAL_STORAGE = bool(int(config('_TRY_LOCAL_STORAGE', 0)))
+_TRY_LOCAL_EMAIL = bool(int(config('_TRY_LOCAL_EMAIL', 0)))
+
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+
+_ALLOWED_HOST = config('ALLOWED_HOST')
+if _ALLOWED_HOST:
+    ALLOWED_HOSTS.append(_ALLOWED_HOST)
 
 # Application definition
 
@@ -46,7 +54,7 @@ INSTALLED_APPS = [
     'manage',
 ]
 
-if not _DEBUG_ENV:
+if not _TRY_LOCAL_STORAGE:
     INSTALLED_APPS.append('cloudinary')
     INSTALLED_APPS.append('cloudinary_storage')
 
@@ -66,16 +74,6 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'dphone.urls'
 
 TEMPLATES = [
-    { 
-        'BACKEND':'django.template.backends.jinja2.Jinja2',
-        'DIRS': [
-            ],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'autoescape': False
-        },
-    },
-
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
@@ -102,29 +100,12 @@ WSGI_APPLICATION = 'dphone.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 
-# if _DEBUG_ENV:
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3-2'),
     }
 }
-
-# else:
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': config('DATABASES_DEFAULT_ENGINE', 'django.db.backends.postgresql'),
-#             'NAME': config('DATABASES_DEFAULT_NAME'),
-#             'HOST': config('DATABASES_DEFAULT_HOST'),
-#             'PORT': int(config('DATABASES_DEFAULT_PORT', 5432)),
-#             'USER': config('DATABASES_DEFAULT_USER'),
-#             'PASSWORD': config('DATABASES_DEFAULT_PASSWORD'),
-
-#         }
-#     }
-
-# postgres://otnlpfetrjecrf:5c6fd87aa89216709f28e05e0b1c749aa568b4f45b5ba9a3f8e2dc1a114e5f34@ec2-34-201-95-176.compute-1.amazonaws.com:5432/d1f6fspp8ogf8g
 
 
 
@@ -168,27 +149,17 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-STATICFILES_DIRS = [
-   os.path.join(BASE_DIR, 'static/')
-]
-
 MEDIA_URL = '/media/'    
 
-# if not _DEBUG_ENV:
-#     MEDIA_URL = '/dphone/media/'
-# else:
-#     MEDIA_URL = '/media/'    
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/dphone')
 
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-
-if not _DEBUG_ENV:
+if not _TRY_LOCAL_STORAGE:
 
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
     CLOUDINARY_STORAGE = {
-        'CLOUD_NAME': config('CLOUDINARY_STORAGE_CLOUD_NAME', 'dlwilbknx'),
+        'CLOUD_NAME': config('CLOUDINARY_STORAGE_CLOUD_NAME'),
         'API_KEY': config('CLOUDINARY_STORAGE_API_KEY'),
         'API_SECRET': config('CLOUDINARY_STORAGE_API_SECRET')
     }
@@ -200,7 +171,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
 ###DEVELOPMENT
-if _DEBUG_ENV:
+if _TRY_LOCAL_EMAIL:
     EMAIL_HOST = 'localhost'
     EMAIL_PORT = '1025'
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from py_recommendation.constants import STOPWORDS
+from .constants import STOPWORDS
 from re import sub
 
 

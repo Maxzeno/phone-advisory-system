@@ -1,4 +1,4 @@
-from py_recommendation.item_profile import ItemProfile
+from .item_profile import ItemProfile
 
 class UserProfile(ItemProfile):
     """docstring for UserProfile"""

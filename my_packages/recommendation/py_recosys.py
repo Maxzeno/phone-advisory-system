@@ -1,6 +1,6 @@
-from py_recommendation.item_profile import ItemProfile
-from py_recommendation.user_profile import UserProfile
-from py_recommendation.error import RecoError
+from .item_profile import ItemProfile
+from .user_profile import UserProfile
+from .error import RecoError
 
 import sys, json
 import numpy as np

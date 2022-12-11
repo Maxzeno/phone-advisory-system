@@ -13,7 +13,8 @@ from django.core.wsgi import get_wsgi_application
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dphone.settings')
 
-if settings._DEPLOY:
-	os.system('python manage.py migrate')
+# if settings._DEPLOY:
+# 	os.system('python manage.py migrate')
+# 	os.system('python manage.py collectstatic')
 
 application = get_wsgi_application()
