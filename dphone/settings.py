@@ -28,7 +28,7 @@ DEBUG = bool(int(config('DEBUG', 0)))
 # _DEPLOY = False
 
 # use local db, storage, email config create be me
-_TRY_LOCAL_DB = bool(int(config('_TRY_LOCAL_DB', 1)))
+_TRY_LOCAL_DB = bool(int(config('_TRY_LOCAL_DB', 0)))
 _TRY_LOCAL_STORAGE = bool(int(config('_TRY_LOCAL_STORAGE', 0)))
 _TRY_LOCAL_EMAIL = bool(int(config('_TRY_LOCAL_EMAIL', 0)))
 
@@ -107,6 +107,26 @@ DATABASES = {
     }
 }
 
+if _TRY_LOCAL_DB:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
+
+
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': config('DATABASES_DEFAULT_ENGINE'),
+            'NAME': config('DATABASES_DEFAULT_NAME'),
+            'HOST': config('DATABASES_DEFAULT_HOST'),
+            'PORT': int(config('DATABASES_DEFAULT_PORT')),
+            'USER': config('DATABASES_DEFAULT_USER'),
+            'PASSWORD': config('DATABASES_DEFAULT_PASSWORD'),
+        }
+    }
 
 
 # Password validation
