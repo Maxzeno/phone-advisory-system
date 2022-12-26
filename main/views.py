@@ -101,8 +101,8 @@ class CreateFAQs(View):
 class CreatePhones(View):
 	def get(self, request, num):
 		price = [200, 365, 155, 2036, 88, 96, 567, 211, 96]
-		# images_list = ['img/51vf1R1wS9L._AC_UY218__gfuauf.jpg', 'img/71DCZOdq92S._AC_UY218__1_eckyyu.jpg', 'img/71RxOftVoQL._AC_UY218__cmgsmo.jpg', 'img/190_uta7bp.jpg']
-		images_list = ['img/51vf1R1wS9L._AC_UY218_.jpg', 'img/71DCZOdq92S._AC_UY218_ (1).jpg', 'img/71RxOftVoQL._AC_UY218_.jpg', 'img/618LuqyIX6L._AC_UY218_.jpg']
+		images_list = ['img/51vf1R1wS9L._AC_UY218__gfuauf.jpg', 'img/71DCZOdq92S._AC_UY218__1_eckyyu.jpg', 'img/71RxOftVoQL._AC_UY218__cmgsmo.jpg', 'img/190_uta7bp.jpg']
+		# images_list = ['img/51vf1R1wS9L._AC_UY218_.jpg', 'img/71DCZOdq92S._AC_UY218_ (1).jpg', 'img/71RxOftVoQL._AC_UY218_.jpg', 'img/618LuqyIX6L._AC_UY218_.jpg']
 		phone_image_front = images_list
 		phone_image_back = images_list
 		phone_image_side = images_list
