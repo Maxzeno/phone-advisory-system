@@ -20,7 +20,7 @@ python-dateutil
 python-decouple
 pytz
 requests
-scikit-learn
+# scikit-learn
 scipy
 shortuuid
 six
